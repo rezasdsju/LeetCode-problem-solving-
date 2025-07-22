@@ -1,0 +1,47 @@
+#Solution 1 : Correct solution but not Accepted
+from typing import List
+import itertools
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
+        comb=list(itertools.combinations(nums,3))
+        diff={}
+        for i in range(len(comb)):
+            summi=sum(comb[i])
+            diff[summi]=abs(target-summi)
+            #print('difference:',abs(target-summi))
+        minni=min(diff.values())
+        for key,val in diff.items():
+            if val==minni:
+                return key
+nums =[10,20,30,40,50,60,70,80,90]
+target = 1
+print(Solution().threeSumClosest(nums,target))
+
+#Solution 02- Accepted
+from typing import List
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
+        n=len(nums)
+        difference=float('inf')
+        for i in range(n):
+            if i>0 and nums[i]==nums[i-1]:
+                continue
+            left=i+1
+            right=n-1
+            while left<right:
+                summ=nums[i]+nums[left]+nums[right]
+                diff=abs(summ-target)
+                if diff<=difference:
+                    difference=diff
+                    summs=summ
+                if summ<target:
+                    left+=1
+                else:
+                    right-=1       
+        return summs
+
+nums=[4,0,5,-5,3,3,0,-4,-5]
+target=-2
+print(Solution().threeSumClosest(nums,target))
