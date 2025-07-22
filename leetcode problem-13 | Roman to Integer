@@ -1,0 +1,61 @@
+#Solution-01
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        i, num, l = 0, 0, len(s)
+        while i < l:
+            if s[i] == 'M':
+                num += 1000
+            elif s[i] == 'C':
+                if i + 1 < l and s[i:i+2] == 'CD':
+                    num += 400
+                    i += 1
+                elif i + 1 < l and s[i:i+2] == 'CM':
+                    num += 900
+                    i += 1
+                else:
+                    num += 100
+            elif s[i] == 'D':
+                num += 500
+            elif s[i] == 'X':
+                if i + 1 < l and s[i:i+2] == 'XC':
+                    num += 90
+                    i += 1
+                elif i + 1 < l and s[i:i+2] == 'XL':
+                    num += 40
+                    i += 1
+                else:
+                    num += 10
+            elif s[i] == 'L':
+                num += 50
+            elif s[i] == 'V':
+                num += 5
+            elif s[i] == 'I':
+                if i + 1 < l and s[i:i+2] == 'IV':
+                    num += 4
+                    i += 1
+                elif i + 1 < l and s[i:i+2] == 'IX':
+                    num += 9
+                    i += 1
+                else:
+                    num += 1
+            i += 1
+        return num
+print(Solution().romanToInt("MCMXCIV"))  
+
+
+#Solution-02
+class Solution:
+    def romanToInt(self,s:str)->int:
+        roman={'I':1,'V':5,'X':10,'L':50
+               ,'C':100,'D':500,'M':1000}
+        total=0
+        previous_val=0
+        for ch in s:
+            current_val=roman[ch]
+            total=current_val+total
+            if current_val>previous_val:
+                total=total-previous_val*2
+            previous_val=current_val
+        return total
+s='MMCD'
+print(Solution().romanToInt(s))
