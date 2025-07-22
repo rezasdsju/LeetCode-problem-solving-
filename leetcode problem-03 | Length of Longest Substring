@@ -1,0 +1,45 @@
+#Solution-01
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if len(s)==0:
+            return 0
+        elif len(s)==1:
+            return 1
+        elif all(c==" " for c in s):
+            return 1
+        else:
+            s=[i for i in s]
+            maxxi=0
+            for i in range(len(s)):
+                seen=set()
+                for j in range(i,len(s)):
+                    if s[j] not in seen:
+                        seen.add(s[j])
+                        if len(seen)>maxxi:
+                            maxxi=len(seen)
+                    else:
+                        break
+        return maxxi
+
+s="pwwkew"
+print(Solution().lengthOfLongestSubstring(s)) 
+
+
+
+
+
+#Solution-02
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        char_set=set()
+        max_len=0
+        left=0
+        for right in range(len(s)):
+            while s[right] in char_set:
+                char_set.remove(s[left])
+                left+=1
+            char_set.add(s[right])
+            max_len=max(max_len,right-left+1)
+        return max_len
+s="pwwkew"
+print(Solution.lengthOfLongestSubstring(1,s)) 
